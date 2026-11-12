@@ -25,6 +25,9 @@ class User(Base):
     role: Mapped[UserRole] = mapped_column(
         Enum(UserRole, name="user_role"), default=UserRole.user
     )
+    foto_url: Mapped[str | None] = mapped_column("foto_profil", String(500), nullable=True)
+    no_telepon: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )

@@ -5,14 +5,16 @@ from slowapi.errors import RateLimitExceeded
 
 from app.core.config import settings
 from app.core.limiter import limiter
-from app.routers import auth
-from app.routers import predict
+from app.routers import admin, auth, feedback, predict, profil
 
 app = FastAPI(title="Fraudex API")
 app.state.limiter = limiter
 api_v1 = APIRouter(prefix="/api/v1")
 api_v1.include_router(auth.router)
 api_v1.include_router(predict.router)
+api_v1.include_router(profil.router)
+api_v1.include_router(feedback.router)
+api_v1.include_router(admin.router)
 app.include_router(api_v1)
 
 @app.exception_handler(RateLimitExceeded)
@@ -36,9 +38,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-api_v1 = APIRouter(prefix="/api/v1")
-api_v1.include_router(auth.router)
-app.include_router(api_v1)
 
 
 @app.get("/health")
