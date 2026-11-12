@@ -24,8 +24,12 @@ class Settings(BaseSettings):
     ADMIN_EMAIL: str = ""
     ADMIN_PASSWORD: str = ""
 
+    GOOGLE_CLIENT_ID: str = ""
+    
     CORS_ORIGINS: str = "http://localhost:3000"
     LOGIN_RATE_LIMIT: str = "10/minute"
+
+    CLOUDINARY_URL: str = ""
 
     @property
     def cors_origin_list(self) -> list[str]:

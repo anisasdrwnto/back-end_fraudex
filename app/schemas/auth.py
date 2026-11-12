@@ -30,3 +30,6 @@ class UserOut(BaseModel):
     name: str
     email: str
     role: str
+
+class GoogleLoginRequest(BaseModel):
+    credential: str = Field(min_length=20, max_length=4096)

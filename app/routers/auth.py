@@ -8,6 +8,7 @@ from app.core.database import get_db
 from app.core.deps import get_current_user
 from app.models.user import User
 from app.schemas.auth import (
+    GoogleLoginRequest,
     LoginRequest,
     RefreshRequest,
     RegisterRequest,
@@ -53,3 +54,8 @@ def me(user: User = Depends(get_current_user)):
         email=user.email,
         role=user.role.value,
     )
+
+@router.post("/google", response_model=TokenResponse)
+@limiter.limit(settings.LOGIN_RATE_LIMIT)
+def google_login(request: Request, body: GoogleLoginRequest, db: Session = Depends(get_db)):
+    return auth_service.google_login(db, body.credential)
